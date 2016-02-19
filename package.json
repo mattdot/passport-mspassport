@@ -1,0 +1,32 @@
+{
+  "name": "passport-mspassport",
+  "version": "0.0.2",
+  "description": "Microsoft Passport & Windows Hello provider for PassportJS",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mattdot/passport-mspassport.git"
+  },
+  "files": [
+    "lib"
+  ],
+  "keywords": [
+    "Windows",
+    "Hello",
+    "Microsoft",
+    "Passport"
+  ],
+  "author": "Matt Dotson <mdotson@microsoft.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mattdot/passport-mspassport/issues"
+  },
+  "homepage": "https://github.com/mattdot/passport-mspassport",
+  "dependencies": {
+    "express": "^4.13.4",
+    "pkginfo": "^0.3.1"
+  }
+}
