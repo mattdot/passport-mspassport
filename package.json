@@ -1,6 +1,6 @@
 {
   "name": "passport-mspassport",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Microsoft Passport & Windows Hello provider for PassportJS",
   "main": "lib/index.js",
   "scripts": {
