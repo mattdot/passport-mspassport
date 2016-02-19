@@ -27,6 +27,8 @@
   "homepage": "https://github.com/mattdot/passport-mspassport",
   "dependencies": {
     "express": "^4.13.4",
-    "pkginfo": "^0.3.1"
+    "passport-strategy": "^1.0.0",
+    "pkginfo": "^0.3.1",
+    "util": "^0.10.3"
   }
 }
