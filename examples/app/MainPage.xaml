@@ -1,0 +1,32 @@
+﻿<Page
+    x:Class="PassportApp.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PassportApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel>
+            <TextBlock>
+            <Run>Windows Hello is </Run>
+            <Run x:Name="HelloCapable"/>
+            <Run> on your machine.</Run>
+            </TextBlock>
+            <TextBlock x:Name="RegStatus"/>
+            <RelativePanel x:Name="RegisterPanel" Visibility="Visible">
+                <TextBlock x:Name="RegisterHeader">Register</TextBlock>
+                <TextBox x:Name="FirstNameBox" PlaceholderText="First Name" RelativePanel.Below="RegisterHeader" Width="200"/>
+                <TextBox x:Name="LastNameBox" RelativePanel.Below="FirstNameBox" PlaceholderText="Last Name" Width="200" />
+                <TextBox x:Name="UsernameBox" RelativePanel.Below="LastNameBox" PlaceholderText="username" InputScope="AlphanumericFullWidth" Width="200"/>
+                <Button x:Name="RegisterButton" Click="RegisterButton_Click" RelativePanel.Below="UsernameBox">Register</Button>
+            </RelativePanel>
+            <RelativePanel x:Name="RelativePanel" Visibility="Visible">
+                <TextBlock x:Name="LoginHeader">Login</TextBlock>
+                <Button x:Name="LoginButton" Visibility="Collapsed" Click="LoginButton_Click">Log in with Hello</Button>
+            </RelativePanel>
+            <Button x:Name="ResetButton" Visibility="Visible" Click="ResetButton_Click">Clear all local credentials</Button>
+        </StackPanel>
+    </Grid>
+</Page>
