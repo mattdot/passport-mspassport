@@ -2,8 +2,8 @@ var fs = require('fs');
 var express = require("express");
 var bodyParser = require('body-parser');
 var passport = require("passport");
-//var mspassport = require("passport-mspassport");
-var mspassport = require("../../lib/index");
+var mspassport = require("passport-mspassport");
+//var mspassport = require("../../lib/index");
 var UserDB = require("./users");
 var MSPassportStrategy = mspassport.Strategy;
 
