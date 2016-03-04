@@ -1,0 +1,17 @@
+{
+  "name": "mspassport-app-sample",
+  "version": "0.0.1",
+  "description": "sample app for passport-mspassport",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Matt Dotson <mdotson@microsoft.com>",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "passport": "^0.3.2",
+    "passport-mspassport": "0.0"
+  }
+}
