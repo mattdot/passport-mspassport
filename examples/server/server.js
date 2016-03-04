@@ -1,3 +1,4 @@
+var fs = require('fs');
 var express = require("express");
 var bodyParser = require('body-parser');
 var passport = require("passport");
@@ -20,8 +21,15 @@ var users = new UserDB([
 ]);
 
 var app = express();
-app.use(express.static('../web'));
 app.use(bodyParser.json());
+//add the web directory if it exists
+fs.access("../web", fs.F_OK, function(err){
+    if(!err) {
+        app.use(express.static('../web'));
+    }
+});
+
+
 
 // configure passport to use the MSPassportStrategy
 passport.use("mspassport", new MSPassportStrategy({
