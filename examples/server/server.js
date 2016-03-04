@@ -2,7 +2,7 @@ var express = require("express");
 var bodyParser = require('body-parser');
 var passport = require("passport");
 //var mspassport = require("passport-mspassport");
-var mspassport = require("../../../lib/index");
+var mspassport = require("../../lib/index");
 var UserDB = require("./users");
 var MSPassportStrategy = mspassport.Strategy;
 
@@ -20,6 +20,7 @@ var users = new UserDB([
 ]);
 
 var app = express();
+app.use(express.static('../web'));
 app.use(bodyParser.json());
 
 // configure passport to use the MSPassportStrategy
