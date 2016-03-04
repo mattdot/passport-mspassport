@@ -1,4 +1,3 @@
-var fs = require('fs');
 var express = require("express");
 var bodyParser = require('body-parser');
 var passport = require("passport");
@@ -14,7 +13,7 @@ var users = new UserDB([
         "preferredUserName" : "mattdot",
         "displayName" : "Matt Dotson",
         "credentials" : {
-            "password" : "super_secret",
+            "password" : "secret",
             "keys" : ["1234567890"]
         }
     }
@@ -22,14 +21,7 @@ var users = new UserDB([
 
 var app = express();
 app.use(bodyParser.json());
-//add the web directory if it exists
-fs.access("../web", fs.F_OK, function(err){
-    if(!err) {
-        app.use(express.static('../web'));
-    }
-});
-
-
+app.use(express.static('static'));
 
 // configure passport to use the MSPassportStrategy
 passport.use("mspassport", new MSPassportStrategy({
@@ -56,10 +48,10 @@ passport.use("mspassport", new MSPassportStrategy({
     }
 }));
 
-app.get("/", function(req,res){
-    res.write("hello passport");
-    res.end();
-});
+// app.get("/", function(req,res){
+//     res.write("hello passport");
+//     res.end();
+// });
 
 app.put("/register", function(req, res) {
     console.log(req.body);
