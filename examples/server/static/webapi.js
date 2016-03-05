@@ -106,25 +106,56 @@
     function validateChallenge() {
         
     }
+    
+    function goToTab(tabId) {
+        $(".tab-content .active").removeClass("active");
+        $(tabId).addClass("active");
+    }
 
 
     $(document).ready(function(event) { 
         // var root = document.getElementById("root");
         // root.innerText = passportAvailable() ? "Hello!" : "I can't say hello to you";
         $("#login_button").click(function(){
-            
+            if(passportAvailable()) {
+                goToTab("#hello_enlist");
+            } else {
+                goToTab("#goodbye");
+            }
         });
         
         $("#register_button").click(function() {
             if(passportAvailable()) {
-                
+                goToTab("#hello_register");
+            } else {
+                goToTab("#goodbye");
             }
         });
         
-        $("#use_hello").click(function(){
-            makeCredential("Jane Doe", "janedoe", function (assertion) {
+        $("#register_submit").click(function () {
+            var username = $("#register_username").value;
+            var displayName = $("#register_displayname").value;
+            makeCredential(displayName, username, function (assertion) {
                console.log(assertion); 
             });
+        });
+        
+        $("#use_hello").click(function(){
+            console.log("getting challenge from server");
+            var xhr = $.post("/auth/mspassport")
+                .fail(function(res){
+                    console.log(res.status);
+                    console.log(res.statusCode());
+                    if(403 === res.status) {
+                        //get challenge from auth header
+                    }
+                })
+                .done(function(data, status, res){
+                    
+                });
+            //makeCredential("Jane Doe", "janedoe", function (assertion) {
+            //   console.log(assertion); 
+            //});
         });
     });
 })(jQuery));

@@ -10,8 +10,13 @@
     </head>
     <body>
         <nav class="navbar navbar-default">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">Contoso</a>
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Contoso</a>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#scenarios" data-toggle="modal" data-target="#scenarios"><span class="glyphicon glyphicon-question-sign"></span>&nbsp;Help</a></li>
+                </ul>
             </div>
         </nav>
         <div id="root">
@@ -34,16 +39,24 @@
                         </div>
                     </form>
                 </div>
-                <div id="hello_register" class="tab-pane">
+                <div id="hello_register" class="tab-pane text-center">
                     <h2>Register with Contoso</h2>
                     <div id="register_supported">Good news, your device supports Windows Hello and you can use it to authenticate with Contoso. With Windows Hello, you can log in to Contoso on this PC without a password.</div>
-                    <input id="register_displayname" placeholder="Full Name" type="text"/>
-                    <input id="register_username" placeholder="username" type="text"/>
-                    <div>
-                        <input id="register_hello" type="button" class="btn btn-primary"  value="Register using Windows Hello"/>
-                    </div>
+                    <form>
+                        <div class="form-group">
+                            <label for="register_displayname">Full Name</label>
+                            <input id="register_displayname" placeholder="Full Name" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="register_username">Username</label>
+                            <input id="register_username" placeholder="username" type="text"/>
+                        </div>
+                        <div class="form-group">
+                            <input id="register_submit" type="button" class="btn btn-primary"  value="Register using Windows Hello"/>
+                        </div>
+                    </form>
                 </div>
-                <div id="hello_enlist" class="tab-pane">
+                <div id="hello_enlist" class="tab-pane text-center">
                     <h2>Introducing Windows Hello</h2>
                     <div>Welcome Xyzx.</div>
                     <div>Good news, your device supports Windows Hello and you can use it to authenticate with Contoso. With Windows Hello, you can log in to Contoso on this PC without a password.</div>
@@ -72,7 +85,11 @@
                 <div id="hello_delist" class="tab-pane">
                     todo: delist here
                 </div>
-            </ul>
+                <div id="goodbye" class="tab-pane text-center">
+                    <h2>Browser Not Supported</h2>
+                    <p>Unfortunately your browser doesn't support Windows Hello.  Open this page in Microsoft Edge to experience the demo.</p>
+                </div>
+            </div>
         </div>
         <div id="scenarios" class="modal fade">
             <div class="modal-dialog" role="document">
