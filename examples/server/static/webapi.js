@@ -99,12 +99,74 @@
         log("signature: " + assertion.signature.signature);
     }
 
-    function makeChallenge() {
-        
+    function getChallenge(callback) {
+        return $.post("/auth/mspassport")
+        .fail(function(res){
+            console.log(res.status);
+            if(401 === res.status) {
+                //get challenge from auth header
+                var auth = res.getResponseHeader("WWW-Authenticate");
+                console.log(auth);
+                var rx = /challenge="([a-zA-Z0-9/+=]+)"/gi;
+                var m = rx.exec(auth);
+                if (m.length === 2) {
+                    callback(m[1]);
+                } else {
+                    callback();
+                }
+            }
+        })
+        .done(function(data, status, res){
+            callback();
+        });
+    }
+    
+    function sendAssertion(publicKey, challenge, signature, callback) {
+        var authHeader = 'MSPassport' 
+            + ' public_key="' + publicKey + '"'
+            + ' challenge="' + challenge + '"'
+            + ' signature="' + signature + '"';
+            
+        return $.ajax({
+                type: "POST",
+                url: "/auth/mspassport",
+                beforeSend: function(req) { 
+                    req.setRequestHeader('Authorization', authHeader); 
+                } 
+        }).fail(function(res){
+            callback(false);
+        }).done(function (data,status,res) {
+            callback(true, data); // token is in data
+        });
     }
 
-    function validateChallenge() {
-        
+    /* 
+     *
+     * 
+     */ 
+    function authenticate(callback) {
+        // (1) get the challenge nonce from the server
+        getChallenge(function(challenge){
+            if(!challenge) {
+                callback(false);
+                return;
+            }
+            var username = localStorage.getItem("lastUsername");
+            
+            // (2) sign the nonce using passport/hello
+            getAssertion({ userPrompt : "Hello there"}, challenge, username, function (assertion) {
+                if(!assertion) {
+                    callback(false);
+                    return;
+                }
+                
+                // (3) send the public key, challenge, and signature 
+                // back up to the server to get an access token
+                sendAssertion("",challenge, assertion.signature.signature, function(success, token){
+                    
+                });
+            });
+        });
     }
     
     function goToTab(tabId) {
@@ -114,8 +176,13 @@
 
 
     $(document).ready(function(event) { 
-        // var root = document.getElementById("root");
-        // root.innerText = passportAvailable() ? "Hello!" : "I can't say hello to you";
+        
+        if(localStorage.getItem("lastPublicKey")) {
+            $("#hello_login_name").text(localStorage.getItem("lastDisplayName"));
+            goToTab("#hello_login");
+        }
+        
+        
         $("#login_button").click(function(){
             if(passportAvailable()) {
                 goToTab("#hello_enlist");
@@ -133,30 +200,41 @@
         });
         
         $("#register_submit").click(function () {
-            var username = $("#register_username").value;
-            var displayName = $("#register_displayname").value;
+            var username = $("#register_username")[0].value;
+            var displayName = $("#register_displayname")[0].value;
+            
+            // (1) make a key credential for this user
             makeCredential(displayName, username, function (assertion) {
                console.log(assertion); 
+               
+               // (2) send registration details to server
+               
+               // (3) save some info locally to help login the user next time
+               localStorage.setItem("lastUsername", username);
+               localStorage.setItem("lastDisplayName", displayName);
+               localStorage.setItem("lastPublicKey", assertion.publicKey); //todo
+                
+                // (4) go to loggedIn Tab;
+                goToTab("#logged_in");
             });
         });
         
         $("#use_hello").click(function(){
-            console.log("getting challenge from server");
-            var xhr = $.post("/auth/mspassport")
-                .fail(function(res){
-                    console.log(res.status);
-                    if(403 === res.status) {
-                        //get challenge from auth header
-                        var auth = res.getResponseHeader("WWW-Authorize");
-                        console.log(auth);
-                    }
-                })
-                .done(function(data, status, res){
-                    
-                });
             //makeCredential("Jane Doe", "janedoe", function (assertion) {
             //   console.log(assertion); 
             //});
         });
+        
+        $("#hello_login_button").click(function () {
+            authenticate(function(success) {
+                if(success) {
+                    goToTab("#logged_in");
+                }
+            });
+        });
+        $("#not_me").click(function () {
+            localStorage.clear();
+            goToTab("#classic_login");
+        })
     });
 })(jQuery));

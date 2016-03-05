@@ -68,17 +68,23 @@
                     <a href="#pin"><span>I only see PIN, what do I do?</span></a>
                     </div>
                 </div>
-                <div id="hello_enlist_success" class="tab-pane">
+                <div id="hello_enlist_success" class="tab-pane text-center">
                     <h2>Success</h2>
                     <div>You've successfully linked this device to your Contoso account.  </div>
                 </div>
-                <div id="hello_login" class="tab-pane">
+                <div id="hello_login" class="tab-pane text-center">
                     <h2>Log in to Contoso</h2>
                     <div>Welcome back <span id="hello_login_name"></span></div>
-                    <input id="hello_login_button" type="button" value="Log in using Windows Hello"/>
-                    <a href="#not_me">That's not me!</a>
+                    <form>
+                        <div class="form-group">
+                            <input id="hello_login_button" type="button" class="btn btn-primary" value="Log in using Windows Hello"/>
+                        </div>
+                        <div class="form-group">
+                            <a id="not_me" href="#not_me">That's not me!</a>
+                        </div>
+                    </form>
                 </div>
-                <div id="logged_in" class="tab-pane">
+                <div id="logged_in" class="tab-pane text-center">
                     <h2>Contoso</h2>
                     <div>You're logged into Contoso</div>
                 </div>
