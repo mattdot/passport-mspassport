@@ -145,9 +145,10 @@
             var xhr = $.post("/auth/mspassport")
                 .fail(function(res){
                     console.log(res.status);
-                    console.log(res.statusCode());
                     if(403 === res.status) {
                         //get challenge from auth header
+                        var auth = res.getResponseHeader("WWW-Authorize");
+                        console.log(auth);
                     }
                 })
                 .done(function(data, status, res){
