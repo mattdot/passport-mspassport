@@ -26,7 +26,6 @@
   },
   "homepage": "https://github.com/mattdot/passport-mspassport",
   "dependencies": {
-    "express": "^4.13.4",
     "passport-strategy": "^1.0.0"
   },
   "devDependencies": {
